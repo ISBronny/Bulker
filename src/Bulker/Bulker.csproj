@@ -7,6 +7,8 @@
         <PackageId>Bulker.13.10.2024.001.Test</PackageId>
         <Version>0.1.0-alpha</Version>
         <Authors>Ivan Brayko</Authors>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,4 +17,8 @@
         <PackageReference Include="System.Reactive"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="../../assets/icon.png" Pack="true" Visible="false" PackagePath="/" />
+        <None Include="../../README.md" Pack="true" Visible="false" PackagePath="/" />
+    </ItemGroup>
 </Project>
