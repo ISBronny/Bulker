@@ -1,4 +1,7 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADispatchProxy_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FSourcesCache_003F8cea913422b4c5428b982602cb45f74eddd7c3c1a55981673681fcc61fb9ab4_003FDispatchProxy_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AParallel_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FLocal_003FSymbols_003Fsrc_003Fdotnet_003Fruntime_003F9f4b1f5d664afdfc80e1508ab7ed099dff210fbd_003Fsrc_003Flibraries_003FSystem_002EThreading_002ETasks_002EParallel_003Fsrc_003FSystem_003FThreading_003FTasks_003FParallel_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AProxyGenerator_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F34e54cf52b4a4c2b82645ccc3a46837e5e000_003F6c_003F35779936_003FProxyGenerator_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1c5e8f68_002D7d23_002D4eec_002Db1bc_002D58154915dc5c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::2CF5CD22-8731-4953-BCAB-0A13C07A29C8::net8.0::Bulker.Tests.UnitTest1.Test1&lt;/TestId&gt;&#xD;
@@ -6,6 +9,6 @@
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bc441597_002De9b9_002D43af_002D9318_002Dc83e474902b3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UnitTest1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::2CF5CD22-8731-4953-BCAB-0A13C07A29C8::net8.0::Bulker.Tests.UnitTest1&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::2CF5CD22-8731-4953-BCAB-0A13C07A29C8::net8.0::Bulker.Tests.AccumulatorTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
