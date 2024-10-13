@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <TargetFramework>net8.0</TargetFramework>
         <PackageId>Bulker.13.10.2024.001.Test</PackageId>
-        <Version>0.1.0-alpha</Version>
+        <Version>0.1.1-alpha</Version>
         <Authors>Ivan Brayko</Authors>
         <PackageIcon>icon.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
