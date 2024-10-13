@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulker", "Bulker\Bulker.csproj", "{B11F8087-E7C0-4163-82B7-6B48B8B67FB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulker", "src\Bulker\Bulker.csproj", "{B11F8087-E7C0-4163-82B7-6B48B8B67FB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulker.Tests", "Bulker.Tests\Bulker.Tests.csproj", "{2CF5CD22-8731-4953-BCAB-0A13C07A29C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulker.Tests", "tests\Bulker.Tests\Bulker.Tests.csproj", "{2CF5CD22-8731-4953-BCAB-0A13C07A29C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

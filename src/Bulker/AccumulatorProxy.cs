@@ -19,10 +19,7 @@ public class AccumulatorProxy<TInput, TOutput> : DispatchProxy
         var method = _accumulator.GetType().GetMethod(targetMethod.Name,
             targetMethod.GetParameters().Select(p => p.ParameterType).ToArray());
 
-        if (method != null)
-        {
-            return method.Invoke(_accumulator, args);
-        }
+        if (method != null) return method.Invoke(_accumulator, args);
 
         throw new NotImplementedException($"Method {targetMethod.Name} is not implemented in the accumulator.");
     }

@@ -5,6 +5,13 @@ namespace Bulker.Tests;
 
 public class AccumulatorTests : IDisposable
 {
+    public void Dispose()
+    {
+        TestHandler.LastInputTestEntities.Clear();
+        TestHandler.InvalidItem = null;
+        TestHandler.Counter = 0;
+    }
+
     [Fact]
     public async Task ExecuteAsync_WhenSingeItem_ShouldExecuteWithSingleItem()
     {
@@ -29,7 +36,7 @@ public class AccumulatorTests : IDisposable
         Assert.Equal("123", item.Value);
         TestHandler.LastInputTestEntities.Single().Item.Should().Be(input);
     }
-    
+
     [Fact]
     public async Task ExecuteAsync_WhenItemsCountLessThenBatch_ShouldExecuteUsingSingleBatch()
     {
@@ -45,15 +52,15 @@ public class AccumulatorTests : IDisposable
 
         var input = Enumerable.Range(0, 10).Select(x => new InputTestEntity { Id = x }).ToArray();
         // Act
-        
-        var output = await Task.WhenAll(input.Select(x=>accumulator.ExecuteAsync(x, default)));
+
+        var output = await Task.WhenAll(input.Select(x => accumulator.ExecuteAsync(x, default)));
 
         // Assert
         output.Should().HaveCount(10);
         output.Select(x => x.Value).Should().BeEquivalentTo(input.Select(x => x.Id.ToString()));
         TestHandler.LastInputTestEntities.Should().HaveCount(10);
     }
-    
+
     [Fact]
     public async Task ExecuteAsync_WhenItemsCountGreaterThenBatch_ShouldExecuteUsingSingleBatch()
     {
@@ -69,15 +76,15 @@ public class AccumulatorTests : IDisposable
 
         var input = Enumerable.Range(0, 10).Select(x => new InputTestEntity { Id = x }).ToArray();
         // Act
-        
-        var output = await Task.WhenAll(input.Select(x=>accumulator.ExecuteAsync(x, default)));
+
+        var output = await Task.WhenAll(input.Select(x => accumulator.ExecuteAsync(x, default)));
 
         // Assert
         output.Should().HaveCount(10);
         output.Select(x => x.Value).Should().BeEquivalentTo(input.Select(x => x.Id.ToString()));
         TestHandler.LastInputTestEntities.Should().HaveCountLessOrEqualTo(5);
     }
-    
+
     [Fact]
     public async Task ExecuteAsync_WhenInvalidItemInBatchAndSingleProcessingEnabled_ShouldExecuteSeparately()
     {
@@ -92,8 +99,8 @@ public class AccumulatorTests : IDisposable
         var sp = services.BuildServiceProvider();
         var accumulator = sp.GetRequiredService<ITestAccumulator>();
 
-        var validInput = new InputTestEntity() { Id = 1 };
-        var invalidInput = new InputTestEntity() { Id = 2 };
+        var validInput = new InputTestEntity { Id = 1 };
+        var invalidInput = new InputTestEntity { Id = 2 };
         TestHandler.InvalidItem = invalidInput;
 
         // Act
@@ -104,12 +111,12 @@ public class AccumulatorTests : IDisposable
 
         // Assert
         await Assert.ThrowsAsync<InvalidOperationException>(async () => await invalidTask);
-        await validTask; 
-        
+        await validTask;
+
         TestHandler.LastInputTestEntities.Should().HaveCount(1);
         TestHandler.Counter.Should().Be(3);
     }
-    
+
     [Fact]
     public async Task ExecuteAsync_WhenInvalidItemInBatchAndSingleProcessingDisabled_ShouldThorw()
     {
@@ -124,8 +131,8 @@ public class AccumulatorTests : IDisposable
         var sp = services.BuildServiceProvider();
         var accumulator = sp.GetRequiredService<ITestAccumulator>();
 
-        var validInput = new InputTestEntity() { Id = 1 };
-        var invalidInput = new InputTestEntity() { Id = 2 };
+        var validInput = new InputTestEntity { Id = 1 };
+        var invalidInput = new InputTestEntity { Id = 2 };
         TestHandler.InvalidItem = invalidInput;
 
         // Act
@@ -136,16 +143,9 @@ public class AccumulatorTests : IDisposable
 
         // Assert
         await Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.WhenAll(validTask, invalidTask));
-        
+
         TestHandler.LastInputTestEntities.Should().HaveCount(2);
         TestHandler.Counter.Should().Be(1);
-    }
-
-    public void Dispose()
-    {
-        TestHandler.LastInputTestEntities.Clear();
-        TestHandler.InvalidItem = null;
-        TestHandler.Counter = 0;
     }
 }
 
@@ -155,24 +155,26 @@ internal sealed class TestHandler : IAccumulatorHandler<InputTestEntity, OutputT
 {
     public static IList<InputWrapper<InputTestEntity, OutputTestEntity>> LastInputTestEntities { get; private set; } =
         new List<InputWrapper<InputTestEntity, OutputTestEntity>>();
+
     public static InputTestEntity? InvalidItem { get; set; }
 
-    public static int Counter { get; set; } = 0;
-    
-    public Task<IReadOnlyDictionary<InputTestEntity, OutputTestEntity>> HandleAsync(IList<InputWrapper<InputTestEntity, OutputTestEntity>> items)
+    public static int Counter { get; set; }
+
+    public Task<IReadOnlyDictionary<InputTestEntity, OutputTestEntity>> HandleAsync(
+        IList<InputWrapper<InputTestEntity, OutputTestEntity>> items)
     {
         Counter++;
         LastInputTestEntities = items.ToList();
 
-        if(items.Select(x=>x.Item).Contains(InvalidItem))
+        if (items.Select(x => x.Item).Contains(InvalidItem))
             throw new InvalidOperationException("Invalid item");
-        
+
         var output = items
-            .ToDictionary(x => x.Item, x => new OutputTestEntity()
+            .ToDictionary(x => x.Item, x => new OutputTestEntity
             {
                 Value = x.Item.Id.ToString()
             });
-        
+
         return Task.FromResult<IReadOnlyDictionary<InputTestEntity, OutputTestEntity>>(output);
     }
 }

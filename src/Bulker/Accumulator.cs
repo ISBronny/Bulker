@@ -4,11 +4,11 @@ using System.Reactive.Subjects;
 
 namespace Bulker;
 
-public class Accumulator<TInput, TOutput> : IAccumulator<TInput, TOutput> where TInput : notnull
+internal sealed class Accumulator<TInput, TOutput> : IAccumulator<TInput, TOutput> where TInput : notnull
 {
-    private readonly ISubject<InputWrapper<TInput, TOutput>> _subject = new Subject<InputWrapper<TInput, TOutput>>();
     private readonly IAccumulatorHandler<TInput, TOutput> _handler;
     private readonly AccumulatorOptions _options;
+    private readonly Subject<InputWrapper<TInput, TOutput>> _subject = new();
 
     public Accumulator(IAccumulatorHandler<TInput, TOutput> handler, AccumulatorOptions accumulatorOptions)
     {
@@ -17,10 +17,21 @@ public class Accumulator<TInput, TOutput> : IAccumulator<TInput, TOutput> where 
         Initialize();
     }
 
+    public async Task<TOutput> ExecuteAsync(TInput item, CancellationToken token)
+    {
+        var wrapper = new InputWrapper<TInput, TOutput>
+        {
+            Item = item,
+            CancellationToken = token
+        };
+        _subject.OnNext(wrapper);
+        return await wrapper.TaskCompletionSource.Task.WaitAsync(token);
+    }
+
     private void Initialize()
     {
         _subject.Buffer(_options.Timeout, _options.MaxBatchSize)
-            .Where(x=>x.Any())
+            .Where(x => x.Any())
             .Subscribe(async wrappers => await ProcessItems(wrappers));
     }
 
@@ -73,16 +84,5 @@ public class Accumulator<TInput, TOutput> : IAccumulator<TInput, TOutput> where 
                 wrapper.TaskCompletionSource.SetException(e);
             }
         });
-    }
-
-    public async Task<TOutput> ExecuteAsync(TInput item, CancellationToken token)
-    {
-        var wrapper = new InputWrapper<TInput, TOutput>
-        {
-            Item = item,
-            CancellationToken = token
-        };
-        _subject.OnNext(wrapper);
-        return await wrapper.TaskCompletionSource.Task.WaitAsync(token);
     }
 }
